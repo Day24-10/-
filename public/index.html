@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>AI</title>
+    <link rel="stylesheet" href="styles.css"> <!-- CSS 파일 링크 -->
+</head>
+<body>
+<div class="container">
+    <h1>AI</h1>
+    <div id="chatBox" class="chat-box"></div>
+    <div class="input-area">
+        <textarea id="userInput" placeholder="메시지를 입력하세요" rows="3"></textarea>
+        <button id="sendBtn">전송</button>
+    </div>
+</div>
+
+<script>
+    let typingInterval; // 타이머 변수
+
+    document.getElementById('sendBtn').onclick = sendMessage;
+
+    document.getElementById('userInput').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            if (event.shiftKey) {
+                // Shift + Enter일 경우 줄바꿈
+                event.preventDefault(); // 기본 동작 방지
+                this.value += '\n'; // 줄바꿈 추가
+            } else {
+                // 그냥 Enter일 경우 메시지 전송
+                event.preventDefault(); // 기본 동작 방지
+                sendMessage();
+            }
+        }
+    });
+
+    document.getElementById('userInput').addEventListener('input', function() {
+        hideTypingIndicator(); // 사용자가 입력을 시작하면 "입력 중" 메시지 숨김
+    });
+
+    async function sendMessage() {
+        const input = document.getElementById('userInput').value;
+        if (!input.trim()) return; // 빈 메시지 전송 방지
+
+        // "입력 중..." 메시지 표시
+        showTypingIndicator();
+
+        // 타이머 시작
+        startTypingTimer();
+
+        const response = await fetch('/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ input })
+        });
+        const data = await response.json();
+        console.log('클라이언트 응답:', data.response);
+
+        // 사용자 메시지 추가
+        addMessageToChatBox(input, true); // 사용자 메시지 추가
+        // AI 응답 추가
+        addMessageToChatBox(data.response); // AI 응답 추가
+
+        // 입력창 비우기
+        document.getElementById('userInput').value = '';
+        // 채팅 박스 스크롤을 맨 아래로
+        document.getElementById('chatBox').scrollTop = document.getElementById('chatBox').scrollHeight;
+
+        // 메시지가 왔으니 "입력 중..." 메시지 숨기기
+        hideTypingIndicator();
+    }
+
+    function showTypingIndicator() {
+        const indicator = document.getElementById('typingIndicator');
+        indicator.style.display = 'block';
+        document.getElementById('typingTime').textContent = '0.0초'; // 초기화
+
+        // 타이머 시작
+        startTypingTimer();
+    }
+
+    function hideTypingIndicator() {
+        const indicator = document.getElementById('typingIndicator');
+        indicator.style.display = 'none';
+
+        // 타이머 중지
+        clearInterval(typingInterval);
+    }
+
+    function startTypingTimer() {
+        let timeElapsed = 0; // 경과 시간 초기화
+        const typingTimeDisplay = document.getElementById('typingTime');
+
+        typingInterval = setInterval(() => {
+            timeElapsed += 0.1; // 0.1초씩 증가
+            typingTimeDisplay.textContent = timeElapsed.toFixed(1) + '초'; // 소수점 한 자리까지 표시
+        }, 100); // 100ms마다 호출
+    }
+
+    // 메시지를 채팅 박스에 추가하는 함수
+    function addMessageToChatBox(message, isUserMessage = false) {
+        const formattedMessage = formatMessage(message);
+        const messageClass = isUserMessage ? 'user-message' : 'bot-message'; // 사용자 메시지 클래스 결정
+        document.getElementById('chatBox').innerHTML += `
+            <div class="${messageClass}">
+                <div class="message">${formattedMessage}</div>
+            </div>`;
+    }
+
+    // 메시지 포맷팅 함수
+    function formatMessage(message) {
+        // 이미지 처리, PNG만 지원
+        const imageFormatted = message.replace(/\{\{img::(.*?)\}\}/g, '<img src="images/$1.png" class="chat-image" alt="이미지">');
+        
+        // *사이에 있는 텍스트를 회색으로 변경
+        const situationFormatted = imageFormatted.replace(/\*(.*?)\*/g, '<span style="color: #aaa;">$1</span>');
+
+        // 줄바꿈 처리
+        const lineBreaksFormatted = situationFormatted.replace(/\n/g, '<br>');
+
+        // 코드 블록 처리
+        return lineBreaksFormatted.replace(/```(.*?)```/gs, '<pre><code>$1</code></pre>');
+    }
+</script>
+</body>
+</html>

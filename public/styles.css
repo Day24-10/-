@@ -1,0 +1,127 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #1b1b1b; /* 다크 모드 배경 */
+    color: #fff; /* 텍스트 색상 */
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px; /* 가로 크기 증가 */
+    margin: auto;
+    background: #2a2a2a; /* 채팅 박스 배경 */
+    border-radius: 12px; /* 둥근 모서리 */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5); /* 그림자 추가 */
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #ffcc00; /* 제목 색상 */
+    margin-bottom: 20px; /* 제목 아래 여백 */
+}
+
+.chat-box {
+    border: 1px solid #444;
+    border-radius: 8px; /* 둥근 모서리 */
+    padding: 15px;
+    height: 600px; /* 채팅 박스 높이 */
+    overflow-y: auto;
+    margin-bottom: 15px;
+    background-color: #333; /* 채팅 박스 배경 */
+}
+
+.input-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 중앙 정렬 */
+}
+
+textarea {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    margin-right: 10px;
+    background-color: #222; /* 입력창 배경 */
+    color: #fff; /* 입력창 텍스트 색상 */
+    resize: none; /* 크기 조정 비활성화 */
+    font-size: 14px; /* 폰트 크기 */
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffcc00; /* 버튼 색상 */
+    color: #1b1b1b; /* 버튼 텍스트 색상 */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s; /* 부드러운 전환 */
+    font-size: 14px; /* 폰트 크기 */
+}
+
+button:hover {
+    background-color: #e6b800; /* 버튼 호버 색상 */
+    transform: scale(1.05); /* 크기 증가 효과 */
+}
+
+.user-message {
+    display: flex; /* 플렉스 박스 사용 */
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    margin: 10px 0; /* 위아래 여백 */
+}
+
+.user-message .message {
+    background-color: #444; /* 사용자 메시지 배경 */
+    border-radius: 5px;
+    padding: 10px;
+    max-width: 25%; /* 최대 너비 설정 */
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+}
+
+.bot-message {
+    display: flex; /* 플렉스 박스 사용 */
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    margin: 10px 0; /* 위아래 여백 */
+}
+
+.bot-message .message {
+    background-color: #444; /* 봇 메시지 배경 */
+    border-radius: 5px;
+    padding: 10px;
+    max-width: 75%; /* 최대 너비 설정 */
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+}
+
+.message {
+    flex: 1;
+}
+
+.situation-description {
+    color: #aaa; /* 연한 회색 */
+    font-style: italic; /* 이탤릭체 */
+}
+
+pre {
+    background-color: #1e1e1e; /* 코드 블록 배경색 */
+    color: #dcdcdc; /* 코드 블록 텍스트 색상 */
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+    white-space: pre-wrap; /* 줄바꿈 처리 */
+}
+
+.chat-image {
+    max-width: 100%; /* 이미지가 너무 크지 않도록 설정 */
+    height: auto; /* 비율 유지 */
+    display: block; /* 블록 요소로 설정 */
+    margin: 10px 0; /* 위아래 여백 */
+}
+
+.typing-indicator {
+    text-align: center;
+    font-size: 16px; /* 글자 크기 */
+    color: #ffcc00; /* 색상 */
+    margin-top: 10px; /* 위 여백 */
+    transition: opacity 0.5s; /* 부드러운 전환 */
+}
