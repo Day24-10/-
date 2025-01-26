@@ -24,3 +24,11 @@
 
 # 추가 및 건의사항
 Issues에 올려주면 적극 반영해줄게
+
+# 사용법
+nodejs 설치
+
+경로에서 cmd 키고
+npm install
+node server.js
+입력
