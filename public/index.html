@@ -13,6 +13,9 @@
         <textarea id="userInput" placeholder="메시지를 입력하세요" rows="3"></textarea>
         <button id="sendBtn">전송</button>
     </div>
+    <div id="typingIndicator" class="typing-indicator" style="display: none;">
+        입력 중... <span id="typingTime">0.0초</span>
+    </div>
 </div>
 
 <script>
@@ -109,7 +112,7 @@
 
     // 메시지 포맷팅 함수
     function formatMessage(message) {
-        // 이미지 처리, PNG만 지원
+        // 이미지 처리, PNG와 JPEG 확장자 모두 지원
         const imageFormatted = message.replace(/\{\{img::(.*?)\}\}/g, '<img src="images/$1.png" class="chat-image" alt="이미지">');
         
         // *사이에 있는 텍스트를 회색으로 변경
