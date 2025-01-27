@@ -32,3 +32,7 @@ nodejs 설치
 npm install
 node server.js
 입력
+
+
+# 후원 계좌
+국민은행 71820201277342 - 박동우
