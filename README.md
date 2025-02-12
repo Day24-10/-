@@ -32,7 +32,3 @@ nodejs 설치
 npm install
 node server.js
 입력
-
-
-# 후원 계좌
-케이뱅크 888-001-695024 - 박동우
